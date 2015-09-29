@@ -1,16 +1,33 @@
-package nz.geek.nicholasparry.trpalarmclock;
+package nz.geek.nicholasparry.trpalarmclock.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import nz.geek.nicholasparry.trpalarmclock.AlarmControler;
+import nz.geek.nicholasparry.trpalarmclock.R;
+
+/**
+ * Main activity for trp alarm clock
+ * Switches to ViewAlarmAtivity
+ * Created by nick on 29/09/15.
+ * @author nick
+ * @version 1
+ */
 public class MainActivity extends Activity {
+
+    private AlarmControler alarmControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        alarmControler = AlarmControler.getAlarmControler();
+        Intent intent = new Intent(this, ViewAlarmsActivity.class);
+        startActivity(intent);
     }
 
     @Override
