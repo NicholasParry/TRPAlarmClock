@@ -1,5 +1,9 @@
 package nz.geek.nicholasparry.trpalarmclock;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+
 /**
  * Used to manage all alarms
  * Works as a singleton
@@ -87,6 +91,17 @@ public class AlarmControler {
      * @return true if sucsessful
      */
     public boolean save(){
+        //create array off objects;
+        //use GSON to create a string
+        //save in shared prefs
+        //Gson
+        Alarm[] arms = new Alarm[3];
+        arms[0] = new Alarm(1,2);
+        arms[1] = new Alarm(34, 567);
+        arms[2] = new Alarm(0,0);
+
+        Gson gson = new Gson();
+        Log.d("Gson bro", gson.toJson(arms));
         return false;
     }
 

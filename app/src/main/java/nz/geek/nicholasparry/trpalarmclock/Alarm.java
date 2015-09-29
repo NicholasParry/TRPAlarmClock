@@ -1,5 +1,7 @@
 package nz.geek.nicholasparry.trpalarmclock;
 
+import android.graphics.PointF;
+
 /**
  * Individual alarm object
  *
@@ -23,6 +25,7 @@ public class Alarm {
     public Alarm(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+
     }
 
     /**
@@ -39,5 +42,9 @@ public class Alarm {
      */
     public int getMinute() {
         return minute;
+    }
+
+    public PointF getPointF(){
+        return new PointF(hour,minute);
     }
 }
