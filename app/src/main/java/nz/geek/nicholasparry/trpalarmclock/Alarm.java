@@ -25,10 +25,18 @@ public class Alarm {
         this.minute = minute;
     }
 
+    /**
+     * get hour at witch the alarm should sound
+     * @return hour of alarm
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * get minute at witch the alarm shouuld sound
+     * @return minute of alarm
+     */
     public int getMinute() {
         return minute;
     }
