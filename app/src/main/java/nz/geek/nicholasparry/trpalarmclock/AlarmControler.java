@@ -1,5 +1,8 @@
 package nz.geek.nicholasparry.trpalarmclock;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -13,23 +16,42 @@ import com.google.gson.Gson;
  */
 public class AlarmControler {
 
-    //Used for creating a singleton class
-    private static AlarmControler alarmControler = new AlarmControler(true);
 
+    private static final Gson gson = new Gson();
+    private static AlarmControler alarmControler; //Used for creating a singleton class
+    private static SharedPreferences prefs;
+
+    private static final String SHARED_PREFS_ALARM_ARRAY = "TRP_ALARMS";
 
     /**
      * Creates a new alarm object
-     * @param load weather to load saved alar
+     * @param loadSavedData weather to load saved data
+     * @param context contect of application
      */
-    private AlarmControler(boolean load) {
-        if(load){
+    private AlarmControler(boolean loadSavedData, Context context) {
+        if(loadSavedData){
             load();
         }
+        this.prefs = context.getSharedPreferences("TRP_ALARM_CLOCK", Context.MODE_PRIVATE);
+
+    }
+
+
+    /**
+     * Effectivly calls the constructer
+     * @param loadSavedData weather to load saved data
+     * @param context contect of application
+     * @return AlarmControler object
+     */
+    public static AlarmControler getNewAlarmControler(boolean loadSavedData, Context context){
+        alarmControler = new AlarmControler(loadSavedData, context);
+        return alarmControler;
     }
 
 
     /**
      * Returns alarm controler object
+     * Only call this after getNewAlarmControler(SharedPreferences prefs)
      * @return AlarmControler object
      */
     public static AlarmControler getAlarmControler(){
@@ -91,17 +113,7 @@ public class AlarmControler {
      * @return true if sucsessful
      */
     public boolean save(){
-        //create array off objects;
-        //use GSON to create a string
-        //save in shared prefs
-        //Gson
-        Alarm[] arms = new Alarm[3];
-        arms[0] = new Alarm(1,2);
-        arms[1] = new Alarm(34, 567);
-        arms[2] = new Alarm(0,0);
-
-        Gson gson = new Gson();
-        Log.d("Gson bro", gson.toJson(arms));
+        prefs.edit().putString(gson.toJson(getAllAlarms()),gson.toJson(getAllAlarms())).commit();
         return false;
     }
 
