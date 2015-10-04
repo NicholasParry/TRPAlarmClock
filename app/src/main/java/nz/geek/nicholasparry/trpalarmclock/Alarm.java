@@ -19,14 +19,16 @@ public class Alarm {
 
     /**
      * Creates a new alarm object
-     * @param hour for alarm to go off in 24h time
-     * @param minute for alarm to go off
+     * @param hour for alarm to go off in 24h time (0-23)
+     * @param minute for alarm to go off (0-59)
      */
     public Alarm(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
 
     }
+
+
 
     /**
      * get hour at witch the alarm should sound
@@ -44,7 +46,5 @@ public class Alarm {
         return minute;
     }
 
-    public PointF getPointF(){
-        return new PointF(hour,minute);
-    }
+
 }

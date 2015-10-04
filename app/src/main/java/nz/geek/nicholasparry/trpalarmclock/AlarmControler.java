@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Used to manage all alarms
  * Works as a singleton
@@ -22,17 +26,27 @@ public class AlarmControler {
     private static SharedPreferences prefs;
 
     private static final String SHARED_PREFS_ALARM_ARRAY = "TRP_ALARMS";
+    private static final String LOG_TAG = "AlarmControler";
+
+    private static ArrayList<Alarm> alarms;
+
 
     /**
      * Creates a new alarm object
      * @param loadSavedData weather to load saved data
      * @param context contect of application
+     * @throws NullPointerException if context is null
      */
     private AlarmControler(boolean loadSavedData, Context context) {
         if(loadSavedData){
             load();
         }
+        if(context == null){
+            throw new NullPointerException("Context Was Empty, please provide a valid context");
+        }
         this.prefs = context.getSharedPreferences("TRP_ALARM_CLOCK", Context.MODE_PRIVATE);
+
+        alarms = new ArrayList<Alarm>();
 
     }
 
@@ -55,7 +69,19 @@ public class AlarmControler {
      * @return AlarmControler object
      */
     public static AlarmControler getAlarmControler(){
+        if(!(isAlarmControlerAvalible())){
+            Log.e(LOG_TAG,"please call getNewAlarmController first");
+        }
         return alarmControler;
+    }
+
+
+    /**
+     * Tests to see if a alarm controler is avalible or a new instance needs to be created
+     * @return true if AlarmControler is avalible
+     */
+    public static boolean isAlarmControlerAvalible(){
+        return (prefs != null);
     }
 
 
@@ -63,8 +89,8 @@ public class AlarmControler {
      * Returns a primitive array off all alarms
      * @return an array Alarm objects
      */
-    public Alarm[] getAllAlarms(){
-        return null;
+    public static ArrayList<Alarm> getAllAlarms(){
+        return alarms;
     }
 
 
@@ -73,8 +99,8 @@ public class AlarmControler {
      * @param alarm alarm object to add
      * @return true if adding was succcseful
      */
-    public boolean addAlarm(Alarm alarm){
-        return false;
+    public static boolean addAlarm(Alarm alarm){
+        return alarms.add(alarm);
     }
 
 
@@ -84,8 +110,8 @@ public class AlarmControler {
      * @param minute for alarm to go off
      * @return true if adding was succcseful
      */
-    public boolean addAlarm(int hour, int minute){
-        return false;
+    public static boolean addAlarm(int hour, int minute){
+        return alarms.add(new Alarm(hour, minute));
     }
 
 
@@ -94,7 +120,7 @@ public class AlarmControler {
      * @param alarm to be removed
      * @return true if sucsessful
      */
-    public boolean removeAlarm(Alarm alarm){
+    public static boolean removeAlarm(Alarm alarm){
         return false;
     }
 
@@ -103,8 +129,17 @@ public class AlarmControler {
      * Loads alarms from the shared preferances
      * @return true if sucsessful
      */
-    public boolean load(){
-        return false;
+    public static boolean load(){
+        String json = prefs.getString(SHARED_PREFS_ALARM_ARRAY, "error");
+        if(json.equals("error")){
+            Log.e(LOG_TAG,"No alarms found in shared preferances");
+            return false;
+        }
+
+        Alarm[] alarmsTemp = gson.fromJson(json,Alarm[].class);
+        alarms = new ArrayList<Alarm>(Arrays.asList(alarmsTemp));
+
+        return true;
     }
 
 
@@ -112,8 +147,8 @@ public class AlarmControler {
      * Saves the alarms to the defult shared prefs
      * @return true if sucsessful
      */
-    public boolean save(){
-        prefs.edit().putString(gson.toJson(getAllAlarms()),gson.toJson(getAllAlarms())).commit();
+    public static boolean save(){
+        prefs.edit().putString(SHARED_PREFS_ALARM_ARRAY, gson.toJson(getAllAlarms().toArray())).commit();
         return false;
     }
 
