@@ -121,6 +121,9 @@ public class AlarmControler {
      * @return true if sucsessful
      */
     public static boolean removeAlarm(Alarm alarm){
+        if(alarms.contains(alarm)){
+            return alarms.remove(alarm);
+        }
         return false;
     }
 
