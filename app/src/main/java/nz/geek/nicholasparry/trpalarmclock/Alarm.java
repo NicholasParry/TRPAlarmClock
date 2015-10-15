@@ -1,5 +1,7 @@
 package nz.geek.nicholasparry.trpalarmclock;
 
+import android.graphics.PointF;
+
 /**
  * Individual alarm object
  *
@@ -17,19 +19,32 @@ public class Alarm {
 
     /**
      * Creates a new alarm object
-     * @param hour for alarm to go off in 24h time
-     * @param minute for alarm to go off
+     * @param hour for alarm to go off in 24h time (0-23)
+     * @param minute for alarm to go off (0-59)
      */
     public Alarm(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+
     }
 
+
+
+    /**
+     * get hour at witch the alarm should sound
+     * @return hour of alarm
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * get minute at witch the alarm shouuld sound
+     * @return minute of alarm
+     */
     public int getMinute() {
         return minute;
     }
+
+
 }

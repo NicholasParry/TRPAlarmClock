@@ -3,11 +3,13 @@ package nz.geek.nicholasparry.trpalarmclock.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import nz.geek.nicholasparry.trpalarmclock.AlarmControler;
 import nz.geek.nicholasparry.trpalarmclock.R;
+import nz.geek.nicholasparry.trpalarmclock.gsonTest;
 
 /**
  * Main activity for trp alarm clock
@@ -24,8 +26,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        alarmControler = AlarmControler.getAlarmControler();
+        Log.d("bleh", "I work at 1");
+        alarmControler = AlarmControler.getNewAlarmControler(false, this);
+        Log.d("bleh", "I work at 2");
+        alarmControler.save();
+        Log.d("bleh", "I work at 3");
+        new gsonTest();
+        Log.d("bleh", "I work at 4");
         Intent intent = new Intent(this, ViewAlarmsActivity.class);
         startActivity(intent);
     }
