@@ -2,9 +2,14 @@ package nz.geek.nicholasparry.trpalarmclock.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TimePicker;
 
+import nz.geek.nicholasparry.trpalarmclock.AlarmControler;
 import nz.geek.nicholasparry.trpalarmclock.R;
 
 /**
@@ -20,6 +25,17 @@ public class NewAlarmActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_alarm);
+
+        ((Button)findViewById(R.id.btn_set_alarm)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour = ((TimePicker)findViewById(R.id.tp_time)).getCurrentHour();
+                int minute = ((TimePicker)findViewById(R.id.tp_time)).getCurrentMinute();
+                AlarmControler.getAlarmControler().addAlarm(hour,minute);
+                Log.d("NewAlarmActivity",AlarmControler.getAlarmControler().getAllAlarms() + "");
+            }
+        });
+
     }
 
     @Override
@@ -43,4 +59,6 @@ public class NewAlarmActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

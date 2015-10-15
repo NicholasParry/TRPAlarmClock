@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         alarmControler = AlarmControler.getAlarmControler();
-        Intent intent = new Intent(this, ViewAlarmsActivity.class);
+        Intent intent = new Intent(this, NewAlarmActivity.class);
         startActivity(intent);
     }
 
