@@ -33,7 +33,11 @@ public class NewAlarmActivity extends Activity {
                 int minute = ((TimePicker)findViewById(R.id.tp_time)).getCurrentMinute();
                 AlarmControler.getAlarmControler().addAlarm(hour,minute);
                 Log.d("NewAlarmActivity",AlarmControler.getAlarmControler().getAllAlarms() + "");
-                
+                Context context = getApplicationContext();
+                CharSequence text = "Alarm is set!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
 
